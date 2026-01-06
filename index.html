@@ -22,17 +22,6 @@
             user-select: none;
         }
 
-        /* Confetti Canvas */
-        #confetti-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 9999;
-        }
-
         #header-img {
             width: 320px;
             height: 100px;
@@ -215,7 +204,6 @@
 </head>
 <body>
 
-    <canvas id="confetti-canvas"></canvas>
     <img id="header-img" src="Asevi__320x100-08.jpg" alt="Kızılay Aşevi">
 
     <div id="content-area">
@@ -495,53 +483,6 @@
         const resultText = document.getElementById('result-text');
         const promptText = document.getElementById('prompt-text');
 
-        // Confetti logic
-        const canvas = document.getElementById('confetti-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particles = [];
-
-        function createParticles(x, y) {
-            const particleCount = 60;
-            for (let i = 0; i < particleCount; i++) {
-                particles.push({
-                    x: x,
-                    y: y,
-                    vx: (Math.random() - 0.5) * 10,
-                    vy: (Math.random() - 0.5) * 10 - 2,
-                    alpha: 1,
-                    color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-                    size: Math.random() * 5 + 2
-                });
-            }
-        }
-
-        function updateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach((p, index) => {
-                p.x += p.vx;
-                p.y += p.vy;
-                p.vy += 0.2; // Gravity
-                p.alpha -= 0.02; // Fade out
-
-                if (p.alpha <= 0) {
-                    particles.splice(index, 1);
-                } else {
-                    ctx.globalAlpha = p.alpha;
-                    ctx.fillStyle = p.color;
-                    ctx.beginPath();
-                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-            });
-
-            if (particles.length > 0) {
-                requestAnimationFrame(updateParticles);
-            }
-        }
-
         // Function to handle click events on the map
         function handleCityClick(event) {
             const path = event.target.closest('path');
@@ -557,10 +498,6 @@
 
                 // Add selected class to the clicked group
                 group.classList.add('selected');
-
-                // Trigger confetti at click position
-                createParticles(event.clientX, event.clientY);
-                updateParticles();
 
                 // Update result text
                 resultText.textContent = `${cityName} Aşevimize sen de katkıda bulun`;
