@@ -200,6 +200,15 @@
             transform: translate(-50%, -100%);
             margin-top: -10px;
         }
+
+        #kizilay-logo {
+            display: none;
+            height: 40px;
+            margin-bottom: 20px;
+            object-fit: contain;
+            max-width: 80%;
+            animation: fadeIn 0.5s ease-out;
+        }
     </style>
 </head>
 <body>
@@ -208,6 +217,7 @@
 
     <div id="content-area">
         <h2 id="prompt-text">Hangi ildensin? Haritadan seç.</h2>
+        <img id="kizilay-logo" src="kizilay_logo.png" alt="Kızılay">
 
         <div id="map-container">
             <svg preserveAspectRatio="xMidYMid meet" version="1.1" id="svg-turkey" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1005 490" xml:space="preserve">
@@ -482,6 +492,7 @@
         const resultArea = document.getElementById('result-area');
         const resultText = document.getElementById('result-text');
         const promptText = document.getElementById('prompt-text');
+        const kizilayLogo = document.getElementById('kizilay-logo');
 
         // Function to handle click events on the map
         function handleCityClick(event) {
@@ -502,9 +513,10 @@
                 // Update result text
                 resultText.textContent = `${cityName} Aşevimize sen de katkıda bulun`;
 
-                // Show result area and hide prompt
+                // Show result area and swap prompt with logo
                 resultArea.classList.add('visible');
-                promptText.style.visibility = 'hidden';
+                promptText.style.display = 'none';
+                kizilayLogo.style.display = 'block';
             }
         }
 
